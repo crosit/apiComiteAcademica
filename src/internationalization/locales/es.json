@@ -1,0 +1,48 @@
+{
+  "hello": "HOLA",
+  "shared": {
+    "errors": {
+      "inactiveSubscription": {
+        "description": "Tu cuenta expiró o no estás registrado",
+        "name": "Cuenta Inactiva"
+      },
+      "forbiddenError": {
+        "name": "Error de Permisos de Administrador",
+        "description": "Esta acción solo es posible con permisos de administrador"
+      }
+    }
+  },
+  "components": {
+    "temporalToken": {
+      "404Error": "Token no encontrado",
+      "invalidToken": "Token no valido",
+      "expiredToken": "Token expirado",
+      "validToken": "Token Valido"
+    },
+    "user": {
+      "emptyUsers": "No hay usuarios para mostrar",
+      "userNotFound": "Usuario no encontrado",
+      "requestRecoverPassword": "Solicitud de recuperación de contraseña"
+    },
+    "company": {
+      "emptyCompanies": "No hay compañías para mostrar",
+      "companyNotFound": "Compañia no encontrada"
+    },
+    "notification": {
+      "notificationNotFound": "Notificación no encontrada"
+    },
+    "position": {
+      "positionNotFound": "Posición no encontrada"
+    },
+    "misc": {
+      "state": {
+        "statesNotFound": "No se encontraron estados",
+        "notFound": "Estado no encontrado"
+      },
+      "country": {
+        "countriesNotFound": "No se encontraron países",
+        "notFound": "País no encontrado"
+      }
+    }
+  }
+}

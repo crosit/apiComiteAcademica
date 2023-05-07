@@ -1,0 +1,48 @@
+{
+  "hello": "HOLA",
+  "shared": {
+    "errors": {
+      "inactiveSubscription": {
+        "description": "Your subscription expired or you don't have an account",
+        "name": "Inactive Subscription"
+      },
+      "forbiddenError": {
+        "name": "Administrator Permissions Error",
+        "description": "This action only is possible with administrator permissions"
+      }
+    }
+  },
+  "components": {
+    "temporalToken": {
+      "404Error": "Temporal Token Not Found",
+      "invalidToken": "Invalid Token",
+      "expiredToken": "Expired Token",
+      "validToken": "Valid Token"
+    },
+    "user": {
+      "emptyUsers": "Empty Users",
+      "userNotFound": "User not found",
+      "requestRecoverPassword": "Password recovery request"
+    },
+    "company": {
+      "emptyCompanies": "Empty Companies",
+      "companyNotFound": "Company Not Found"
+    },
+    "notification": {
+      "notificationNotFound": "Notification Not Found"
+    },
+    "position": {
+      "positionNotFound": "Position Not Found"
+    },
+    "misc": {
+      "state": {
+        "statesNotFound": "No states found",
+        "notFound": "State not found"
+      },
+      "country": {
+        "countriesNotFound": "No countries found",
+        "notFound": "Country not found"
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+stages:
+  - build
+  - deploy
+variables:
+  DOCKER_REGISTRY: 627293181653.dkr.ecr.us-east-1.amazonaws.com
+  AWS_DEFAULT_REGION: us-east-1
+  APP_NAME: comite-api
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+building_image_qa:
+  stage: build
+  before_script:
+    - sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 627293181653.dkr.ecr.us-east-1.amazonaws.com
+  script:
+    - sudo docker build . -f docker/qa/Dockerfile -t $DOCKER_REGISTRY/$APP_NAME:test-$CI_COMMIT_SHA
+    - sudo docker push $DOCKER_REGISTRY/$APP_NAME:test-$CI_COMMIT_SHA
+  only:
+    - test
+
+deploying_qa:
+  stage: deploy
+  script:
+    - cd /home/ubuntu/api/qa
+    - sudo TAG="test-$CI_COMMIT_SHA" docker compose up -d
+  only:
+    - test
+
+building_image_prod:
+  stage: build
+  before_script:
+    - sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 627293181653.dkr.ecr.us-east-1.amazonaws.com
+  script:
+    - sudo docker build . -f docker/prod/Dockerfile -t $DOCKER_REGISTRY/$APP_NAME:prod-$CI_COMMIT_SHA
+    - sudo docker push $DOCKER_REGISTRY/$APP_NAME:prod-$CI_COMMIT_SHA
+  only:
+    - master
+
+deploying_prod:
+  stage: deploy
+  script:
+    - cd /home/ubuntu/api/production
+    - sudo TAG="prod-$CI_COMMIT_SHA" docker compose up -d
+  only:
+    - master

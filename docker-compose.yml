@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  comite_container:
+    image: comite-api
+    container_name: comite_container
+    ports:
+      - "5050:5050"
+    env_file:
+      - ./.env
+    volumes:
+      - "./src:/node/app/src"
+      - "./src/configs/firebase/comite-firebase-adminsdk-az0yy-cc97ff94cb.json:/node/app/comite-firebase-adminsdk-az0yy-cc97ff94cb.json"
+    networks:
+      - comite-api_comite_network
+
+  comite_redis:
+    image: redis:7.0.5
+    container_name: comite_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - comite-api_comite_network
+
+networks:
+  comite-api_comite_network:
+    external: true

@@ -1,0 +1,8 @@
+node_modules
+.gitignore
+.env.copy
+.env
+tsconfig.tsbuildinfo
+dist
+docker
+*.md
