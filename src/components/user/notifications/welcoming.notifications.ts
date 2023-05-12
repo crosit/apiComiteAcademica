@@ -18,13 +18,13 @@ export class WelcomingNotifications extends CustomNotification {
   }
 
   public getSubject(): string {
-    return `Welcoming to Comite ${this.newUser.firstname} ${this.newUser.lastname}`;
+    return `Welcoming to Comite ${this.newUser.apellido_p} ${this.newUser.apellido_m}`;
   }
 
   public getContent(): string {
     return `${
       (this, this.getSubject())
-    }. The administrator just gave you access to this amazing platform ${this.newUser.email}`;
+    }. The administrator just gave you access to this amazing platform ${this.newUser.correo}`;
   }
 
   public getText(): string {

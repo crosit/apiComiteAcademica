@@ -35,8 +35,8 @@ export class NotificationRepository extends Repository<NotificationEntity> {
       updatedAt: !!one,
       receiver: {
         id: true,
-        firstname: pag,
-        lastname: pag,
+        nombre: pag,
+        apellido_p: pag,
       }
     }
   }
@@ -47,11 +47,11 @@ export class NotificationRepository extends Repository<NotificationEntity> {
     let usersToNotify: UserEntity[] = [];
     if (payload.users) {
       const usersById: UserEntity[] = await this.userRepository.find({
-        relations: { fcmToken: true },
+        // relations: { fcmToken: true },
         where: {
           id: In(payload.users),
         },
-        select: { id: true, email: true, fcmToken: { fcmToken: true } },
+        select: { id: true, correo: true },
       });
 
       usersToNotify = usersToNotify.concat(usersById);

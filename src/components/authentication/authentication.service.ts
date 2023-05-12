@@ -9,6 +9,7 @@ import { TemporalService } from '../temporal_tokens/temporal.service';
 import { emailService } from '../../helpers/email/email.service'
 import { EmailI } from '../../helpers/email/interfaces/email.interface'
 import config from '../../configs/envs';
+import { UserI } from "../user/user.types";
 
 // export const loginService = () => {
 //   throw new HTTP400Error({ description: "The user could not loggin cause an bad request error", name: "Error Login User" });
@@ -64,7 +65,8 @@ export class AuthenticateService {
     TOKEN = signToken(
       {
         id: userFound.id,
-        email: userFound.email,
+        email: userFound.correo,
+        name: userFound.nombre + " " + userFound.apellido_p + " " + userFound.apellido_m,
       },
       { expiresIn: "1d" }
     );
@@ -72,8 +74,31 @@ export class AuthenticateService {
       token: TOKEN,
     };
   }
+  async singUp (credentials: UserI) {
+    const userService: UserService = new UserService();
+    
+    const userFound = await userService.getByEmail(credentials.correo);
+    if (userFound) {
+      throw new HTTP400Error({
+        name: "User already exists",
+        description: "User already exists",
+      });
+    }
+    const encryptedPass: string = encryptPass(credentials.password);
+    const userCreated = await userService.store({
+      nombre: credentials.nombre,
+      apellido_p: credentials.apellido_p,
+      apellido_m: credentials.apellido_m,
+      correo: credentials.correo,
+      password: encryptedPass,
+      numero_control: credentials.numero_control,
+      telefono: credentials.telefono,
+      tipoId: 3,
+    });
+    return userCreated;
+  }
   async requestRecoverPassword(email: string) {
-    const user = await this.userRepository.findOne({where: {email}});
+    const user = await this.userRepository.findOne({where: {correo: email}});
     if (!user) {
       throw new HTTP404Error({
         name: ALS.getI18n().__("components.user.userNotFound"),
@@ -91,12 +116,12 @@ export class AuthenticateService {
       service: 'recover-password'
     })
     const dataEmail: EmailI = {
-      to: [user.email],
+      to: [user.correo],
       subject: `Sabeeo - ${ALS.getI18n().__("components.user.requestRecoverPassword")}`,
       template: 'recoverpass',
       context: {
-        name: user.firstname,
-        email: user.email,
+        name: user.nombre,
+        email: user.correo,
         url: config.FRONT_URL + '/recover-password/' + token,
       }
     }

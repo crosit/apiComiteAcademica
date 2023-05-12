@@ -19,6 +19,19 @@ export class AuthenticateController {
     }
   }
 
+  async signUp(req: Request, res: Response, next: NextFunction) {
+    try {
+      const authenticateService: AuthenticateService = new AuthenticateService();
+      const signInResult = await authenticateService.singUp(req.body);
+      return res.send({
+        success: true,
+        data: signInResult,
+      });
+    } catch (error: any) {
+      next(error);
+    }
+  }
+
   async requestRecoverPassword(req: Request, res: Response, next: NextFunction) {
     try {
       const authenticateService: AuthenticateService = new AuthenticateService();

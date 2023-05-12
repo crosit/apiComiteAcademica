@@ -34,7 +34,7 @@ export class UserService {
     return userExists;
   }
   async getByEmail(email: string): Promise<UserEntity | null> {
-    return await this.userRepository.findOne({ where: { email } });
+    return await this.userRepository.findOne({ where: { correo:email } });
   }
   async getAll(
     pagination: PaginationRequestI
@@ -48,6 +48,7 @@ export class UserService {
     const data = await this.userRepository.updateUser(paylod, id);
     return data;
   }
+ 
   async delete(id: number): Promise<UpdateResult> {
     await this.getById(id);
     const data = await this.userRepository.deleteUserById(id);

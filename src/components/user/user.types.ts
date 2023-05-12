@@ -1,7 +1,11 @@
 export interface UserI {
-  firstname: string;
-  lastname: string;
-  email: string;
+  nombre: string;
+  apellido_p: string;
+  apellido_m: string;
+  correo: string;
   password: string;
-  companyId: number;
+  tipoId: number;
+  telefono?: string;
+  numero_control?: string;
+  
 }

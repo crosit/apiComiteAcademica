@@ -35,10 +35,10 @@ export class UserRepository extends Repository<UserEntity> {
     one?: boolean
   ): FindOptionsRelations<UserEntity> => {
     return {
-      position: {
-        department: pag
-      },
-      company: pag,
+      // position: {
+      //   department: pag
+      // },
+      // company: pag,
     };
   };
 
@@ -48,24 +48,24 @@ export class UserRepository extends Repository<UserEntity> {
   ): FindOptionsSelect<UserEntity> => {
     return {
       id: true,
-      firstname: pag,
-      lastname: pag,
-      email: true,
-      isAdmin: true,
-      company: {
-        id: true,
-        name: true,
-        alias: true,
-        imagePath: true,
-      },
-      position: {
-        id: true,
-        name: true,
-        department: {
-          id: true,
-          name: true,
-        },
-      },
+      nombre: pag,
+      apellido_p: pag,
+      correo: true,
+      // isAdmin: true,
+      // company: {
+      //   id: true,
+      //   name: true,
+      //   alias: true,
+      //   imagePath: true,
+      // },
+      // position: {
+      //   id: true,
+      //   name: true,
+      //   department: {
+      //     id: true,
+      //     name: true,
+      //   },
+      // },
     };
   };
   async getUsers(
@@ -99,20 +99,20 @@ export class UserRepository extends Repository<UserEntity> {
         id,
       },
       relations: {
-        company: {
-          client: true,
-        },
+        // company: {
+        //   client: true,
+        // },
       },
       select: {
-        company: {
-          name: true,
-          id: true,
-          clientId: true,
-          client: {
-            name: true,
-            isActive: true,
-          },
-        },
+        // company: {
+        //   name: true,
+        //   id: true,
+        //   clientId: true,
+        //   client: {
+        //     name: true,
+        //     isActive: true,
+        //   },
+        // },
       },
     });
   }
@@ -153,25 +153,25 @@ export class UserRepository extends Repository<UserEntity> {
         id
       }, 
       relations: {
-        company: true,
-        position: {
-          department: true
-        }
+        // company: true,
+        // position: {
+        //   department: true
+        // }
       },
       select: {
         id: true,
-        firstname: true,
-        lastname: true,
-        email: true,
-        company: {
-          name:true
-        },
-        position: {
-          name: true,
-          department: {
-            name: true
-          }
-        }
+        nombre: true,
+        apellido_p: true,
+        correo: true,
+        // company: {
+        //   name:true
+        // },
+        // position: {
+        //   name: true,
+        //   department: {
+        //     name: true
+        //   }
+        // }
       }
     })
   }

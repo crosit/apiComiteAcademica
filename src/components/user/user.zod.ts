@@ -9,7 +9,7 @@ export const validations = {
       const CreateUserSchema = z.object({
         firstname: z.string(),
         lastname: z.string(),
-        email: z.string(),
+        correo: z.string(),
         companyId: z.number(),
       });
       CreateUserSchema.parse(req.body);

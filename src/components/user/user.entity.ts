@@ -20,25 +20,31 @@ export class UserEntity {
   id: number;
 
   @Column({ length: "200", nullable: false })
-  firstname: string;
+  nombre: string;
+
+  @Column({ length: "200", nullable: false })
+  apellido_p: string;
 
   @Column({ length: "250", nullable: false })
-  lastname: string;
+  apellido_m: string;
+
+  @Column({ length: "11", nullable: true })
+  numero_control: string;
 
   @Column({ length: "255", nullable: false })
-  email: string;
+  correo: string;
 
   @Column({ length: "255", nullable: false })
   password: string;
 
-  @Column({ unsigned: false })
-  companyId: number;
+  @Column({ length: "255",unsigned: false })
+  telefono: string;
 
   @Column({ unsigned: true })
-  positionId: number;
+  tipoId: number;
 
-  @Column({ default: false })
-  isAdmin: boolean;
+  // @Column({ default: false })
+  // isAdmin: boolean;
 
   @Exclude()
   @CreateDateColumn()
@@ -54,15 +60,15 @@ export class UserEntity {
   })
   deletedAt?: Date;
 
-  @OneToOne(() => CompanyEntity, (company) => company.id)
-  @JoinColumn({ referencedColumnName: "id" })
-  company: CompanyEntity;
+  // @OneToOne(() => CompanyEntity, (company) => company.id)
+  // @JoinColumn({ referencedColumnName: "id" })
+  // company: CompanyEntity;
 
-  @OneToOne(() => PositionE, (position) => position.id)
-  @JoinColumn({ referencedColumnName: "id" })
-  position: PositionE;
+  // @OneToOne(() => PositionE, (position) => position.id)
+  // @JoinColumn({ referencedColumnName: "id" })
+  // position: PositionE;
 
-  @OneToMany(() => NotificationFcmTokenEntity, (fcmToken) => fcmToken.user)
-  // @JoinColumn({ referencedColumnName: "userId" })
-  fcmToken: NotificationFcmTokenEntity[];
+  // @OneToMany(() => NotificationFcmTokenEntity, (fcmToken) => fcmToken.user)
+  // // @JoinColumn({ referencedColumnName: "userId" })
+  // fcmToken: NotificationFcmTokenEntity[];
 }

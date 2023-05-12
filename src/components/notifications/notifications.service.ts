@@ -58,9 +58,11 @@ export class NotificationService {
           const pushNotificationPayload: PushNotificationPayload = {
             subject: jobNotification.subject,
             content: jobNotification.content,
+            // usersToken: jobNotification.notifiables.map(
+            //   (user: UserEntity) => user.fcmToken[0].fcmToken || ""
+            // ),
             usersToken: jobNotification.notifiables.map(
-              (user: UserEntity) => user.fcmToken[0].fcmToken || ""
-            ),
+              (user: UserEntity) => "")
           };
           pushNotification(pushNotificationPayload);
         }

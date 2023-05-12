@@ -23,10 +23,8 @@ export default new Strategy(
       if (user) {
         return done(null, {
           id: user.id,
-          email: user.email,
-          fullName: `${user.firstname} ${user.lastname}`,
-          companyId: user.companyId,
-          clientId: user.company.clientId
+          email: user.correo,
+          fullName: `${user.nombre} ${user.apellido_p}`,
         });
       }
       return done(null, false);

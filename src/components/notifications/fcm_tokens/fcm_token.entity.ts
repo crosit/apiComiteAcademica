@@ -37,7 +37,7 @@ export class NotificationFcmTokenEntity {
   })
   deletedAt?: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.fcmToken)
+  // @ManyToOne(() => UserEntity, (user) => user.fcmToken)
   // @JoinColumn({ name: "userId" })
   user: UserEntity;
 }

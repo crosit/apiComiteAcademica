@@ -28,7 +28,7 @@ app.get("/readiness", (req, res) => {
 });
 
 initiFirebase;
-app.use(activeSubscriptionMiddleware);
+// app.use(activeSubscriptionMiddleware);
 require("./components/authentication/authentication.routes")(app);
 require("./components/positions/position.routes")(app);
 require("./components/company/company.routes")(app);
