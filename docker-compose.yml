@@ -1,6 +1,11 @@
 version: "3.9"
 
+
+networks:
+    app-tier:
+      driver: bridge
 services:
+
   comite_container:
     image: comite-api
     container_name: comite_container
@@ -8,20 +13,35 @@ services:
       - "5050:5050"
     env_file:
       - ./.env
-    volumes:
-      - "./src:/node/app/src"
-      - "./src/configs/firebase/comite-firebase-adminsdk-az0yy-cc97ff94cb.json:/node/app/comite-firebase-adminsdk-az0yy-cc97ff94cb.json"
+   
+      
+    volumes: 
+      - /media/chris/linux/Docuemtos/menita/agricactus/agc-api:/usr/src/agricactus-api
+        # - "./src/configs/firebase/comite-firebase-adminsdk-az0yy-cc97ff94cb.json:/node/app/comite-firebase-adminsdk-az0yy-cc97ff94cb.json"
+    depends_on: 
+      - mysql
     networks:
-      - comite-api_comite_network
+      - app-tier
+    # networks:
+    #   - comite-api_comite_network
 
-  comite_redis:
-    image: redis:7.0.5
-    container_name: comite_redis
-    ports:
-      - "6379:6379"
-    networks:
-      - comite-api_comite_network
+  mysql:
+      image: mysql:8.0.33
+      volumes:
+          - /media/chris/linux/DB/mysql-data:/var/lib/mysql
+      environment:
+          MYSQL_ROOT_PASSWORD: 123456
+      networks:
+        - app-tier      
 
-networks:
-  comite-api_comite_network:
-    external: true
+  # comite_redis:
+  #   image: redis:7.0.5
+  #   container_name: comite_redis
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - comite-api_comite_network
+
+# networks:
+#   comite-api_comite_network:
+#     external: true
