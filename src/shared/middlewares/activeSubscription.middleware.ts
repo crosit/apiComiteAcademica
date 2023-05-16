@@ -34,10 +34,10 @@ export async function activeSubscriptionMiddleware(
   if (!p) {
     next(new InactiveSubscription());
   }
-  const user = await userService.getById(p.id);
-  if (user.company.client.isActive) {
-    next();
-    return;
-  }
+  // const user = await userService.getById(p.id);
+  // if (user.company.client.isActive) {
+  //   next();
+  //   return;
+  // }
   next(new InactiveSubscription());
 }
