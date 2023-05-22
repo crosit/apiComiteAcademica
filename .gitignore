@@ -3,3 +3,4 @@ node_modules/
 dist
 tsconfig.tsbuildinfo
 sabeeo-firebase-adminsdk-az0yy-cc97ff94cb.json
+public/controlDocumentos/*
