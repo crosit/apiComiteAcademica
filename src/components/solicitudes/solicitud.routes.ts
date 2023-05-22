@@ -1,46 +1,55 @@
 import { Application } from "express";
 import passport from "passport";
+
 import { isAdminMiddleware } from "../../shared/middlewares/isAdmin.middleware";
-import { PositionController } from "./position.controller";
-import { validations } from "./position.zod";
+import { CompanyController } from "./solicitud.controller";
+import { validations } from "./solicitud.zod";
 
-const MODULE = "positions";
-const BASE_URL = "/api/positions";
+import {upload} from "../../shared/middlewares/multer";
 
-const positionController: PositionController = new PositionController();
+const MODULE = "users";
+const BASE_URL = "/api/solicitud";
+
+const companyController: CompanyController = new CompanyController();
 
 export = (app: Application) => {
   app.get(
-    `${BASE_URL}`,
+    BASE_URL,
     passport.authenticate("jwt", { session: false }),
     isAdminMiddleware,
-    positionController.getAll
+    companyController.index
   );
+  app.get(
+    `${BASE_URL}/misc`,
+    passport.authenticate("jwt", { session: false }),
+    isAdminMiddleware,
+    companyController.misc
+  )
   app.post(
-    `${BASE_URL}`,
+    BASE_URL,
     passport.authenticate("jwt", { session: false }),
     isAdminMiddleware,
     validations.CREATE,
-    positionController.store
+    companyController.store
   );
-
   app.get(
     `${BASE_URL}/:id`,
     passport.authenticate("jwt", { session: false }),
     isAdminMiddleware,
-    positionController.getById
+    companyController.getById
   );
-  app.patch(
-    `${BASE_URL}/:id`,
-    passport.authenticate("jwt", { session: false }),
-    isAdminMiddleware,
-    validations.UPDATE,
-    positionController.update
-  );
+  
   app.delete(
     `${BASE_URL}/:id`,
     passport.authenticate("jwt", { session: false }),
     isAdminMiddleware,
-    positionController.delete
+    companyController.delete
+  );
+  app.post(
+    `${BASE_URL}/document`,
+    passport.authenticate("jwt", { session: false }),
+    isAdminMiddleware,
+    upload.single("file"),
+    companyController.setDocument
   );
 };

@@ -4,20 +4,31 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { ClientEntity } from "../client/client.entity";
 import { OneToMany } from 'typeorm';
+import { UserEntity } from "../user/user.entity";
 
-@Entity({ name: "estatus" })
-export class EstatusEntity {
+@Entity({ name: "documentos" })
+export class SolicitudEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id: number;
 
-  @Column({ length: "255", nullable: false })
+  @Column({ nullable: false })
   descripcion: string;
+
+  @Column({ length: "255", nullable: false })
+  url: string;
+
+  @Column({ unsigned: false,default: 1 })
+  estatusId: number;
+
+  @Column({ unsigned: false })
+  nombreDocumento:string;
 
   @Exclude()
   @CreateDateColumn()
@@ -35,8 +46,9 @@ export class EstatusEntity {
 
   // @ManyToOne(() => ClientEntity, (client) => client.id)
   // client: ClientEntity;
+  @ManyToMany(()=>UserEntity)
+  usuarios:UserEntity[];
 
-  // @OneToMany(() => DepartmentE, department => department.company, {cascade: true})
-  // departments: DepartmentE[];
+  
 
 }

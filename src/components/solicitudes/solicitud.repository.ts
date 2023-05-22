@@ -1,27 +1,27 @@
 import { DataSource, Repository, InsertResult, UpdateResult } from "typeorm";
 import AppDataSource from "../../configs/database/datasource.config";
 
-import { EstatusEntity } from "./company.entity";
-import { EstatusI } from "./company.types";
+import { SolicitudEntity } from "./solicitud.entity";
 import { MiscRepository } from '../misc/repository/misc.repository';
+import { SolicitudI } from "./solicitud.types";
 
-export class CompanyRepository extends Repository<EstatusEntity> {
+export class SolicitudRepository extends Repository<SolicitudEntity> {
   constructor() {
-    super(EstatusEntity, AppDataSource.createEntityManager());
+    super(SolicitudEntity, AppDataSource.createEntityManager());
   }
   private readonly miscRepository: MiscRepository = new MiscRepository();
 
-  async getCompanies(clientId: number ): Promise<EstatusEntity[]> {
-    return await this.find({where: {id:clientId}});
+  async getCompanies(clientId: number ): Promise<SolicitudEntity[]> {
+    return await this.find();
   }
 
-  async storeCompany(company: EstatusI): Promise<EstatusEntity> {
-    return await this.save(company);
+  async storeCompany(solicitud: SolicitudI): Promise<SolicitudEntity> {
+    return await this.save(solicitud);
   }
-  async updateCompany(company: EstatusI, id: number): Promise<UpdateResult> {
-    return await this.update({ id }, company);
+  async updateCompany(solicitud: SolicitudI, id: number): Promise<UpdateResult> {
+    return await this.update({ id }, solicitud);
   }
-  async getCompanyById(id: number): Promise<EstatusEntity | null> {
+  async getCompanyById(id: number): Promise<SolicitudEntity | null> {
     return await this.findOne({
       where: {
         id

@@ -57,7 +57,7 @@ export class UserService {
   changeLanguage(language: string): any {
     ALS.setI18n(i18n, language);
   }
-  async misc(clientId: number){
-    return await this.userRepository.misc(clientId);
-  }
+  // async misc(clientId: number){
+  //   return await this.userRepository.misc(clientId);
+  // }
 }

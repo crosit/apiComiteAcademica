@@ -18,17 +18,16 @@ import {
   PaginationResult,
 } from "src/shared/pagination/pagination.interface";
 
-import { CompanyEntity } from "../company/company.entity";
-import { DepartmentE } from '../departments/entities/departments.entity';
-import { PositionE } from '../positions/entities/position.entity';
+import { EstatusEntity } from "../company/company.entity";
+
+
 export class UserRepository extends Repository<UserEntity> {
   constructor() {
     super(UserEntity, AppDataSource.createEntityManager());
   }
   
-  private readonly companyRepository: Repository<CompanyEntity> = AppDataSource.getRepository(CompanyEntity);
-  private readonly departmentRepository: Repository<DepartmentE> = AppDataSource.getRepository(DepartmentE);
-  private readonly positionRepository: Repository<PositionE> = AppDataSource.getRepository(PositionE);
+  private readonly companyRepository: Repository<EstatusEntity> = AppDataSource.getRepository(EstatusEntity);
+  
 
   private readonly relations = (
     pag: boolean,
@@ -134,18 +133,18 @@ export class UserRepository extends Repository<UserEntity> {
     return await this.update(id, { password });
   }
 
-  async misc(clientId: number){
-    const companies = await this.companyRepository.find({where: { clientId } });
-    const departments = await this.departmentRepository.find({where: { company: { clientId } } });
-    const positions = await this.positionRepository.find({where: { department: { company: { clientId } } } });
+  // async misc(clientId: number){
+  //   const companies = await this.companyRepository.find({where: { clientId } });
+  //   const departments = await this.departmentRepository.find({where: { company: { clientId } } });
+  //   const positions = await this.positionRepository.find({where: { department: { company: { clientId } } } });
 
-    const data: {} = {
-      companies,
-      departments,
-      positions
-    }
-    return data
-  }
+  //   const data: {} = {
+  //     companies,
+  //     departments,
+  //     positions
+  //   }
+  //   return data
+  // }
   
   async getProfile(id: number): Promise<UserEntity | null> {
     return await this.findOne({

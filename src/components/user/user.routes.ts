@@ -29,12 +29,12 @@ export = (app: Application) => {
     passport.authenticate("jwt", { session: false }),
     userController.changeLanguage
   );
-  app.get(
-    `${BASE_URL}/misc`,
-    passport.authenticate("jwt", { session: false }),
-    isAdminMiddleware,
-    userController.misc
-  )
+  // app.get(
+  //   `${BASE_URL}/misc`,
+  //   passport.authenticate("jwt", { session: false }),
+  //   isAdminMiddleware,
+  //   userController.misc
+  // )
   app.get(
     `${BASE_URL}/:id`,
     passport.authenticate("jwt", { session: false }),

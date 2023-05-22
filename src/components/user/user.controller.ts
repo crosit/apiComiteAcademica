@@ -64,13 +64,13 @@ export class UserController {
     }
   }
 
-  async misc(req: Request, res: Response, next: NextFunction) {
-    try {
-      const userService: UserService = new UserService();
-      const data = await userService.misc(+req.user.clientId);
-      return res.send({ data, success: true }).status(200);
-    } catch (error: any) {
-      next(error);
-    }
-  }
+  // async misc(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const userService: UserService = new UserService();
+  //     const data = await userService.misc(+req.user.clientId);
+  //     return res.send({ data, success: true }).status(200);
+  //   } catch (error: any) {
+  //     next(error);
+  //   }
+  // }
 }

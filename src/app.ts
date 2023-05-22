@@ -29,15 +29,17 @@ app.get("/readiness", (req, res) => {
 
 initiFirebase;
 // app.use(activeSubscriptionMiddleware);
-require("./components/authentication/authentication.routes")(app);
-require("./components/positions/position.routes")(app);
-require("./components/company/company.routes")(app);
 require("./components/user/user.routes")(app);
-require("./components/misc/misc.routes")(app);
-require("./components/profile/profile.routes")(app);
-require("./components/departments/department.routes")(app);
-require("./components/notifications/notifications.routes")(app);
-require("./components/notifications/fcm_tokens/fcm_token.routes")(app);
+require("./components/authentication/authentication.routes")(app);
+require("./components/solicitudes/solicitud.routes")(app);
+
+// require("./components/positions/position.routes")(app);
+// require("./components/company/company.routes")(app);
+// require("./components/misc/misc.routes")(app);
+// require("./components/profile/profile.routes")(app);
+// require("./components/departments/department.routes")(app);
+// require("./components/notifications/notifications.routes")(app);
+// require("./components/notifications/fcm_tokens/fcm_token.routes")(app);
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
   const isTrusted = errorHandler.handleError(err);
   res.status(isTrusted.statusCode).send(isTrusted);

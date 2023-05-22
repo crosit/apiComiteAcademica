@@ -5,14 +5,16 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { CompanyEntity } from "../company/company.entity";
 import { NotificationFcmTokenEntity } from "../notifications/fcm_tokens/fcm_token.entity";
-import { PositionE } from "../positions/entities/position.entity";
+import { SolicitudEntity } from "../solicitudes/solicitud.entity";
+import { join } from "path";
 
 @Entity({ name: "users" })
 export class UserEntity {
@@ -59,6 +61,21 @@ export class UserEntity {
     nullable: true,
   })
   deletedAt?: Date;
+
+  @ManyToMany(()=>SolicitudEntity)
+  @JoinTable({
+    name: "usuarios_documentos",
+    joinColumn: {
+      name: "usuarioId",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "documentoId",
+      referencedColumnName: "id",
+    }
+  })
+  solicitudes: SolicitudEntity[];
+  
 
   // @OneToOne(() => CompanyEntity, (company) => company.id)
   // @JoinColumn({ referencedColumnName: "id" })
