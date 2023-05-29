@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -47,6 +48,7 @@ export class SolicitudEntity {
   // @ManyToOne(() => ClientEntity, (client) => client.id)
   // client: ClientEntity;
   @ManyToMany(()=>UserEntity)
+  @JoinTable()
   usuarios:UserEntity[];
 
   

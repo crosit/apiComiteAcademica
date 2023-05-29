@@ -8,11 +8,11 @@ import { ALS } from "../../shared/local-storage/internationalization.storage";
 
 export class SolicitudService {
   constructor() {}
-  private readonly companyRepository: SolicitudRepository =
+  private readonly solicitudRepository: SolicitudRepository =
     new SolicitudRepository();
   async store(paylod: SolicitudI): Promise<SolicitudEntity> {
-    const newCompany = await this.companyRepository.storeCompany(paylod);
-    return newCompany;
+    const newsolicitud = await this.solicitudRepository.storeSolicitudes(paylod);
+    return newsolicitud;
   }
   async setDocument(payload: any, id: number) {
     console.log("payload", payload);
@@ -22,43 +22,44 @@ export class SolicitudService {
     };
     return file;
   }
-  async getById(id: number): Promise<SolicitudEntity> {
-    const companyExists = await this.companyRepository.getCompanyById(id);
-    if (!companyExists) {
+  async getById(id: number): Promise<SolicitudEntity[]> {
+    const solicitudExists = await this.solicitudRepository.getSolicitudesById(id);
+
+    if (!solicitudExists) {
       throw new HTTP404Error({
-        name: `${ALS.getI18n().__("components.company.companyNotFound")} ${id}`,
+        name: `${ALS.getI18n().__("components.solicitud.solicitudNotFound")} ${id}`,
         description: `${ALS.getI18n().__(
-          "components.company.companyNotFound"
+          "components.solicitud.solicitudNotFound"
         )} ${id}`,
       });
     }
-    return companyExists;
+    return solicitudExists;
   }
-  async getAll(clientId: number): Promise<SolicitudEntity[]> {
-    const companyExists = await this.companyRepository.getCompanies(clientId);
+  async getAll(clientId: any): Promise<SolicitudEntity[]> {
+    const solicitudExists = await this.solicitudRepository.getSolicitudes(clientId.id);
     
-    if (companyExists.length === 0) {
+    if (solicitudExists.length === 0) {
       throw new HTTP404Error({
-        name: `${ALS.getI18n().__("components.company.emptyCompanies")}`,
+        name: `${ALS.getI18n().__("components.solicitud.emptyCompanies")}`,
         description: `${ALS.getI18n().__(
-          "components.company.emptyCompanies"
+          "components.solicitud.emptyCompanies"
         )}`,
       });
     }
-    return companyExists;
+    return solicitudExists;
   }
   async update(paylod: SolicitudI, id: number): Promise<UpdateResult> {
     await this.getById(id);
-    const data = await this.companyRepository.updateCompany(paylod, id);
+    const data = await this.solicitudRepository.updateSolicitudes(paylod, id);
     return data;
   }
   async delete(id: number): Promise<UpdateResult> {
     await this.getById(id);
-    const data = await this.companyRepository.deleteCompanyById(id);
+    const data = await this.solicitudRepository.deleteSolicitudesById(id);
     return data;
   }
 
   async misc() {
-    return await this.companyRepository.misc();
+    return await this.solicitudRepository.misc();
   }
 }

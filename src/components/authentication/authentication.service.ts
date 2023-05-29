@@ -32,10 +32,11 @@ export class AuthenticateService {
   private readonly userRepository: UserRepository = new UserRepository();
   private readonly temporalService: TemporalService = new TemporalService();
 
-  async signIn(credentials: { email: string; password: string }) {
+  async signIn(credentials: { correo: string; password: string }) {
     const userService: UserService = new UserService();
 
-    const userFound = await userService.getByEmail(credentials.email);
+    const userFound = await userService.getByEmail(credentials.correo);
+    
 
     if (!userFound) {
       throw new HTTP400Error({
@@ -55,6 +56,7 @@ export class AuthenticateService {
       credentials.password,
       userFound.password
     );
+   
     if (!isValidPass) {
       throw new HTTP400Error({
         name: "Wrong Credentials",
@@ -67,11 +69,19 @@ export class AuthenticateService {
         id: userFound.id,
         email: userFound.correo,
         name: userFound.nombre + " " + userFound.apellido_p + " " + userFound.apellido_m,
+        tipoId: userFound.tipoId,
       },
       { expiresIn: "1d" }
     );
+    let user = {
+      id: userFound.id,
+        email: userFound.correo,
+        name: userFound.nombre + " " + userFound.apellido_p + " " + userFound.apellido_m,
+        tipoId: userFound.tipoId,
+    }
     return {
       token: TOKEN,
+      user: user,
     };
   }
   async singUp (credentials: UserI) {

@@ -5,6 +5,7 @@ import {
   UpdateResult,
   FindOptionsSelect,
   FindOptionsRelations,
+  In,
 } from "typeorm";
 import AppDataSource from "../../configs/database/datasource.config";
 
@@ -40,6 +41,8 @@ export class UserRepository extends Repository<UserEntity> {
       // company: pag,
     };
   };
+
+
 
   private readonly select = (
     pag: boolean,
@@ -86,34 +89,56 @@ export class UserRepository extends Repository<UserEntity> {
     return { result: rows, total };
   }
 
-  async storeUser(user: UserI): Promise<UserEntity> {
+  async storeUser(user: any): Promise<UserEntity> {
+
+
     return await this.save(user);
   }
+  
   async updateUser(user: UserI, id: number): Promise<UpdateResult> {
     return await this.update({ id }, user);
   }
   async getUserById(id: number): Promise<UserEntity | null> {
+    
     return await this.findOne({
       where: {
-        id,
+        id:id,
       },
+     
+    });
+  }
+
+ 
+  async getUserByIdSolicitudes(id: number): Promise<UserEntity[] | null> {
+    // console.log("id", id);
+    
+    return await this.find({
       relations: {
-        // company: {
-        //   client: true,
-        // },
+        solicitudes: true,
+        
       },
-      select: {
-        // company: {
-        //   name: true,
-        //   id: true,
-        //   clientId: true,
-        //   client: {
-        //     name: true,
-        //     isActive: true,
-        //   },
-        // },
+      where: {
+        id: id,
+        // solicitudes: {id: id}
       },
     });
+    
+  }
+  async getAllCometeUserById(id: number): Promise<UserEntity[] | null> {
+    // console.log("id", id);
+    
+    return await this.find({
+      relations: {
+        solicitudes: true,
+        
+      },
+      where: {
+        tipoId: In([1, 2]),
+        // solicitudes: {id: id}
+      },
+      
+    });
+    
   }
   async deleteUserById(id: number): Promise<UpdateResult> {
     return await this.softDelete({

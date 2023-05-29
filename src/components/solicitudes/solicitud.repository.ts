@@ -11,25 +11,34 @@ export class SolicitudRepository extends Repository<SolicitudEntity> {
   }
   private readonly miscRepository: MiscRepository = new MiscRepository();
 
-  async getCompanies(clientId: number ): Promise<SolicitudEntity[]> {
-    return await this.find();
-  }
-
-  async storeCompany(solicitud: SolicitudI): Promise<SolicitudEntity> {
-    return await this.save(solicitud);
-  }
-  async updateCompany(solicitud: SolicitudI, id: number): Promise<UpdateResult> {
-    return await this.update({ id }, solicitud);
-  }
-  async getCompanyById(id: number): Promise<SolicitudEntity | null> {
-    return await this.findOne({
+  async getSolicitudes(clientId: number ): Promise<SolicitudEntity[]> {
+    return await this.find({
       where: {
-        id
+        id: clientId
       },
       
     });
   }
-  async deleteCompanyById(id: number): Promise<UpdateResult> {
+  async getSolicitudesById(id: number): Promise<SolicitudEntity[] > {
+    console.log("id", id);
+    
+    return await this.find({
+      where: {
+        id:id
+      },
+      
+    });
+  }
+
+  async storeSolicitudes(solicitud: SolicitudI): Promise<SolicitudEntity> {
+    
+    return await this.save(solicitud);
+  }
+  async updateSolicitudes(solicitud: SolicitudI, id: number): Promise<UpdateResult> {
+    return await this.update({ id }, solicitud);
+  }
+  
+  async deleteSolicitudesById(id: number): Promise<UpdateResult> {
     return await this.softDelete({
       id,
     });

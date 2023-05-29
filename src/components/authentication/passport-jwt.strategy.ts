@@ -25,6 +25,7 @@ export default new Strategy(
           id: user.id,
           email: user.correo,
           fullName: `${user.nombre} ${user.apellido_p}`,
+          tipoId: user.tipoId,
         });
       }
       return done(null, false);

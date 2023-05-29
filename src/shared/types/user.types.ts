@@ -5,4 +5,5 @@ export interface AuthUser {
   companyId: number;
   isAdmin: boolean;
   clientId: number;
+  tipoId: number;
 }
